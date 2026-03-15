@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Grande Transizione - Mappa del Presente</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --ink: #1a1916;
+  --paper: #f5f0e8;
+  --paper2: #ede8dc;
+  --paper3: #e3ddd0;
+  --accent: #c0392b;
+  --accent2: #2c5282;
+  --accent3: #276749;
+  --accent4: #744210;
+  --muted: #6b6454;
+  --border: rgba(26,25,22,0.15);
+  --border2: rgba(26,25,22,0.08);
+  --geo: #2c5282;
+  --war: #c0392b;
+  --fin: #744210;
+  --ai: #553c9a;
+  --eu: #276749;
+  --tag-r: #fef2f2;
+  --tag-rc: #991b1b;
+  --tag-b: #eff6ff;
+  --tag-bc: #1e40af;
+  --tag-g: #f0fdf4;
+  --tag-gc: #166534;
+  --tag-y: #fffbeb;
+  --tag-yc: #92400e;
+  --tag-p: #faf5ff;
+  --tag-pc: #6b21a8;
+  --tag-gr: #f9fafb;
+  --tag-grc: #374151;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* NAV */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 48px;
+  border-bottom: 2px solid var(--accent);
+}
+.nav-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-right: auto;
+  opacity: .7;
+}
+.nav-links {
+  display: flex;
+  gap: 0;
+  height: 100%;
+}
+.nav-link {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,.6);
+  text-decoration: none;
+  padding: 0 14px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: color .15s, background .15s;
+  border-right: 1px solid rgba(255,255,255,.06);
+  cursor: pointer;
+}
+.nav-link:hover, .nav-link.active { color: var(--paper); background: rgba(255,255,255,.08); }
+
+/* HERO */
+.hero {
+  padding: 5rem 2rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.hero-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 640px;
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+.epist-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 1rem 1.2rem;
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+.epist-legend-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+/* TAGS */
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.tag-fatto { background: var(--tag-g); color: var(--tag-gc); }
+.tag-dati  { background: var(--tag-gr); color: var(--tag-grc); }
+.tag-tesi  { background: var(--tag-b); color: var(--tag-bc); }
+.tag-ipotesi { background: var(--tag-y); color: var(--tag-yc); }
+.tag-scenario { background: var(--tag-p); color: var(--tag-pc); }
+.tag-warn  { background: var(--tag-r); color: var(--tag-rc); }
+.tag-geo   { background: #eff6ff; color: #1e40af; }
+.tag-war   { background: #fff1f2; color: #9f1239; }
+.tag-fin   { background: #fffbeb; color: #92400e; }
+.tag-ai    { background: #faf5ff; color: #6b21a8; }
+.tag-eu    { background: #f0fdf4; color: #166534; }
+.tag-src   { background: var(--ink); color: var(--paper); font-size: 9px; }
+
+/* FILTERS */
+.filters-bar {
+  position: sticky;
+  top: 48px;
+  z-index: 90;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border);
+  padding: .6rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.filter-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.filter-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+}
+.filter-btn {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .12s;
+}
+.filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+.filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* SECTIONS */
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--ink);
+}
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .1em;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.era-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 1.5rem 0 .8rem -28px;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.era-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.card {
+  position: relative;
+  margin-bottom: .9rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: box-shadow .15s;
+}
+.card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.card::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: var(--paper);
+}
+.card.c-geo::before { border-color: var(--geo); }
+.card.c-war::before { border-color: var(--war); background: var(--war); }
+.card.c-fin::before { border-color: var(--fin); }
+.card.c-ai::before  { border-color: var(--ai); }
+.card.c-eu::before  { border-color: var(--eu); }
+.card.c-multi::before { border-color: var(--ink); background: var(--ink); }
+
+.card-stripe {
+  height: 3px;
+  background: var(--geo);
+}
+.card.c-war .card-stripe { background: var(--war); }
+.card.c-fin .card-stripe { background: var(--fin); }
+.card.c-ai  .card-stripe { background: var(--ai); }
+.card.c-eu  .card-stripe { background: var(--eu); }
+.card.c-multi .card-stripe { background: linear-gradient(90deg, var(--geo), var(--war), var(--fin), var(--ai)); }
+
+.card-head {
+  padding: 12px 14px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.card-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+  margin-top: 3px;
+  flex-shrink: 0;
+  min-width: 64px;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  flex: 1;
+}
+.card-chevron {
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin-top: 3px;
+  transition: transform .2s;
+}
+.card.open .card-chevron { transform: rotate(180deg); }
+
+.card-tags {
+  padding: 0 14px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.card-body {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border2);
+  display: none;
+}
+.card.open .card-body { display: block; }
+
+.card-body p { margin-bottom: .7rem; font-size: 14px; line-height: 1.7; }
+.card-body p:last-child { margin-bottom: 0; }
+.card-body strong { font-weight: 600; }
+.card-body .context-box {
+  background: var(--paper2);
+  border-left: 3px solid var(--border);
+  padding: 8px 12px;
+  margin: .5rem 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.card-body .sources {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.card-body .sources::before {
+  content: 'Fonti:';
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+/* NATIONS GRID */
+.nations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.nation-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.nation-header {
+  padding: 10px 14px;
+  background: var(--paper2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nation-flag { font-size: 20px; }
+.nation-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+.nation-role {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-left: auto;
+}
+.nation-body {
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.nation-body p { margin-bottom: .5rem; }
+.nation-body p:last-child { margin-bottom: 0; }
+.nation-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 6px 0;
+  padding: 5px 8px;
+  background: var(--paper2);
+  border-radius: 2px;
+}
+.nation-stat-val {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent2);
+}
+.nation-stat-label { font-size: 12px; color: var(--muted); }
+
+/* RECOMMENDATIONS */
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.rec-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 16px 16px 14px;
+  position: relative;
+}
+.rec-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--paper2);
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  line-height: 1;
+}
+.rec-cat {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.rec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.rec-body { font-size: 13px; line-height: 1.65; color: #444; }
+.rec-body ul { padding-left: 1rem; margin-top: .4rem; }
+.rec-body li { margin-bottom: .3rem; }
+.rec-caveats {
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: var(--tag-y);
+  border-radius: 2px;
+  font-size: 11px;
+  color: var(--tag-yc);
+  line-height: 1.5;
+}
+
+/* SCENARIOS */
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.scenario-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 14px 16px;
+}
+.scenario-card.full { grid-column: 1 / -1; }
+.scenario-prob {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.scenario-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.scenario-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.scenario-body { font-size: 13px; line-height: 1.65; color: #444; }
+.scenario-sources { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* THESIS BOX */
+.thesis {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2rem;
+  border-radius: 3px;
+  margin-bottom: 2.5rem;
+}
+.thesis-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,.5);
+  margin-bottom: .8rem;
+}
+.thesis p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(245,240,232,.9);
+}
+.thesis strong { color: var(--paper); }
+
+/* DISCLAIMER */
+.disclaimer {
+  background: var(--paper2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+.disclaimer strong { color: var(--ink); }
+
+/* FOOTER */
+.footer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-top: 2px solid var(--ink);
+}
+.footer-sources {
+  columns: 2;
+  column-gap: 2rem;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.footer-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .hero { padding: 3rem 1.2rem 2.5rem; }
+  .section { padding: 2rem 1.2rem; }
+  .scenarios-grid { grid-template-columns: 1fr; }
+  .scenario-card.full { grid-column: 1; }
+  .nav-links { display: none; }
+  .footer-sources { columns: 1; }
+}
+
+/* HIDE/SHOW filtered */
+.card.hidden, .nation-card.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-title">La Grande Transizione · 2026</span>
+  <div class="nav-links">
+    <a class="nav-link" onclick="scrollTo('cicli')">Cicli Storici</a>
+    <a class="nav-link" onclick="scrollTo('iran')">Conflitto Iran</a>
+    <a class="nav-link" onclick="scrollTo('nazioni')">Nazioni</a>
+    <a class="nav-link" onclick="scrollTo('ai')">Rivoluzione AI</a>
+    <a class="nav-link" onclick="scrollTo('scenari')">Scenari</a>
+    <a class="nav-link" onclick="scrollTo('raccomandazioni')">Raccomandazioni</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-kicker">Marzo 2026 · Ricerca di <a href="https://www.marcofantozzi.it" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Marco Fantozzi</a> e Claude.ai</div>
+  <h1>La <em>Grande Transizione</em>.</h1>
+  <p class="hero-sub">
+    Guerre per le risorse, escalation militare, rivoluzione AI, crisi del dollaro: non sono storie separate. Questa mappa cerca di tenerle insieme.
+    Ogni evento è classificato per tipo, e catalogato come fatto verificato, tesi o ipotesi.
+  </p>
+  <div class="epist-legend">
+    <div class="epist-legend-title">Come leggere i tag</div>
+    <span class="tag tag-fatto">Fatto verificato</span>
+    <span class="tag tag-dati">Dato / stima</span>
+    <span class="tag tag-tesi">Tesi argomentata</span>
+    <span class="tag tag-ipotesi">Ipotesi / interpretazione</span>
+    <span class="tag tag-scenario">Scenario predittivo</span>
+    <span class="tag tag-warn">Warning / rischio</span>
+  </div>
+</div>
+
+<div class="filters-bar">
+  <span class="filter-label">Tema:</span>
+  <button class="filter-btn active" data-group="theme" data-val="all" onclick="applyFilter(this,'theme')">Tutto</button>
+  <button class="filter-btn" data-group="theme" data-val="geo" onclick="applyFilter(this,'theme')">Geopolitica</button>
+  <button class="filter-btn" data-group="theme" data-val="war" onclick="applyFilter(this,'theme')">Conflitto Iran</button>
+  <button class="filter-btn" data-group="theme" data-val="fin" onclick="applyFilter(this,'theme')">Ordine finanziario</button>
+  <button class="filter-btn" data-group="theme" data-val="ai" onclick="applyFilter(this,'theme')">Rivoluzione AI</button>
+  <button class="filter-btn" data-group="theme" data-val="eu" onclick="applyFilter(this,'theme')">Europa</button>
+  <div class="filter-sep"></div>
+  <span class="filter-label">Tipo:</span>
+  <button class="filter-btn active" data-group="epist" data-val="all" onclick="applyFilter(this,'epist')">Tutto</button>
+  <button class="filter-btn" data-group="epist" data-val="fatto" onclick="applyFilter(this,'epist')">Solo fatti</button>
+  <button class="filter-btn" data-group="epist" data-val="tesi" onclick="applyFilter(this,'epist')">Solo tesi</button>
+  <button class="filter-btn" data-group="epist" data-val="scenario" onclick="applyFilter(this,'epist')">Solo scenari</button>
+  <button class="filter-btn" data-group="epist" data-val="warn" onclick="applyFilter(this,'epist')">Warning</button>
+</div>
+
+<!-- ===== SEZIONE 1: CICLI STORICI ===== -->
+<section class="section" id="cicli">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Framework storici, come funziona il potere globale</h2>
+  </div>
+
+  <div class="thesis">
+    <div class="thesis-kicker">Tesi unificante</div>
+    <p>
+      Stiamo vivendo la transizione tra un ordine mondiale e il successivo, come già avvenne con Olanda→Inghilterra→USA. 
+      Questa transizione genera <strong>guerre per le risorse strategiche</strong>, alimenta <strong>trappole di escalation militare</strong>, 
+      e avviene <em>simultaneamente</em> a una <strong>rivoluzione AI</strong> che potrebbe cambiare le regole del gioco 
+      più velocemente di qualsiasi guerra. Il risultato è un sistema ad alta instabilità con più variabili fuori controllo contemporaneamente.
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="era-label">Cicli lunghi, 500 anni di storia</div>
+
+    <div class="card c-fin" data-themes="geo fin" data-epist="tesi">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">1600-oggi</div>
+        <div class="card-title">Il Grande Ciclo degli Imperi, ascesa, apice, declino (Dalio)</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-fin">Ordine finanziario</span>
+        <span class="tag tag-geo">Geopolitica</span>
+        <span class="tag tag-tesi">Tesi argomentata</span>
+        <span class="tag tag-src">Dalio</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Chi è Ray Dalio?</strong> Fondatore di Bridgewater Associates, il più grande hedge fund del mondo (~$150 miliardi in gestione). Ha studiato 500 anni di storia economica per capire i pattern che guidano i mercati globali. Il suo libro <em>Principles for Dealing with the Changing World Order</em> (2021) è il framework più citato nei circoli di geopolitica economica.
+        </div>
+        <p>Il pattern si ripete ogni ~250 anni. Il ciclo tipico: <strong>1) Educazione e innovazione</strong> → il paese produce cose migliori di tutti; <strong>2) Commercio globale</strong> → la sua valuta diventa il mezzo di scambio mondiale ("valuta di riserva"); <strong>3) Indebitamento</strong> → avere la valuta di riserva permette di prendere in prestito più degli altri, e si abusa di questo privilegio; <strong>4) Stampa di moneta</strong> → quando i debiti diventano insostenibili, si stampa moneta per pagarli; <strong>5) Inflazione e conflitto</strong> → la moneta perde valore, cresce la disuguaglianza, emergono leader populisti; <strong>6) Guerra</strong> → il rivale esterno sfida la potenza dominante; <strong>7) Nuovo ordine</strong> → il vincitore della guerra ridisegna il sistema.</p>
+        <p>Questo ciclo è avvenuto con Olanda (dominante 1600-1780), poi Inghilterra (1780-1944), poi USA (1944-oggi). <strong>Dove siamo adesso:</strong> USA con $36 trilioni di debito, polarizzazione interna record, rivale esterno (Cina) in ascesa. Identico alla posizione britannica nel 1930-45. Questo non significa che gli USA "cadranno", significa che la loro dominanza relativa sta diminuendo.</p>
+        <div class="sources">
+          <span class="tag tag-src">Ray Dalio, Changing World Order</span>
+          <span class="tag tag-dati">500 anni di dati storici</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-geo" data-themes="geo" data-epist="tesi">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">~1900-oggi</div>
+        <div class="card-title">Heartland vs Rimland, chi controlla le coste controlla il mondo</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-geo">Geopolitica</span>
+        <span class="tag tag-tesi">Tesi classica</span>
+        <span class="tag tag-src">Mackinder / Spykman / Jick</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Perché importa questo framework?</strong> È il modello mentale con cui il Pentagono e i think tank USA ragionano da 80 anni sulla politica estera. Capirlo spiega perché certi luoghi (Ucraina, Taiwan, Hormuz) sembrano "lontani" ma sono trattati come vitali.
+        </div>
+        <p><strong>Teoria Heartland (Mackinder, 1904):</strong> "Chi controlla l'Europa dell'Est comanda il Cuore del Mondo [Russia/Asia centrale]; chi comanda il Cuore del Mondo comanda l'Isola Mondiale [Eurasia]; chi comanda l'Isola Mondiale comanda il mondo." = La Russia e chiunque controlli quella massa terrestre ha un vantaggio strutturale.</p>
+        <p><strong>Teoria Rimland (Spykman, 1942):</strong> No, il potere reale è nelle coste e nei punti di transito commerciale. Chi controlla la "cintura" costiera intorno all'Eurasia, l'Europa occidentale, il Medio Oriente, l'Asia meridionale, la Cina costiera, controlla il commercio mondiale. Gli USA sono la potenza rimland per eccellenza: basi navali globali, controllo degli oceani.</p>
+        <p><strong>Applicazione pratica:</strong> Ucraina = accesso russo al Mar Nero e al Mediterraneo → Russia non può cederla. Taiwan = controllo del Pacifico occidentale e dei semiconduttori → USA e Cina non possono cederla. Iran/Hormuz = 20% del petrolio globale passa da lì → controllo strategico fondamentale.</p>
+        <div class="sources">
+          <span class="tag tag-src">Halford Mackinder</span>
+          <span class="tag tag-src">Nicholas Spykman</span>
+          <span class="tag tag-src">Andre Jick</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-geo" data-themes="geo" data-epist="tesi">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">Tesi 2022</div>
+        <div class="card-title">La Cina è al picco, non in ascesa, e questo è il momento più pericoloso (Brands &amp; Beckley)</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-geo">Geopolitica</span>
+        <span class="tag tag-tesi">Tesi controversa</span>
+        <span class="tag tag-warn">Warning Taiwan</span>
+        <span class="tag tag-src">Brands & Beckley</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Chi sono?</strong> Hal Brands (Johns Hopkins) e Michael Beckley (Tufts) sono due strategisti che hanno scritto <em>Danger Zone: The Coming Conflict with China</em> (2022). La loro tesi è controintuitiva rispetto a Dalio e molto discussa.
+        </div>
+        <p>Dalio vede la Cina in costante ascesa. Brands & Beckley vedono una Cina che ha già raggiunto il picco della sua crescita relativa. Segnali: <strong>popolazione in rapido declino</strong> (dal 2022 la Cina perde abitanti, primo calo dal grande balzo del 1961), <strong>trappola del reddito medio</strong> (difficoltà a passare da economia manifatturiera a economia dell'innovazione), <strong>debito corporativo record</strong>, <strong>crisi immobiliare strutturale</strong> (Evergrande era il sintomo).</p>
+        <p><strong>La conclusione è paradossalmente più preoccupante di Dalio:</strong> Le potenze non fanno guerre quando sono forti e in ascesa, le fanno quando sono forti ma percepiscono che la loro finestra di vantaggio si sta chiudendo. Una Cina che capisce di avere 5-10 anni prima che il divario demografico e tecnologico con gli USA si allarghi ha incentivi fortissimi ad agire su Taiwan <em>adesso</em>, non fra vent'anni.</p>
+        <p>Questo spiega il comportamento aggressivo cinese nel Mar Cinese Meridionale, su Taiwan, e la corsa all'AI: non è la sicurezza di chi vince, è la fretta di chi sa che la finestra si chiude.</p>
+        <div class="sources">
+          <span class="tag tag-src">Hal Brands & Michael Beckley, Danger Zone</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-fin" data-themes="fin" data-epist="tesi">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">2022-oggi</div>
+        <div class="card-title">Bretton Woods III, il dollaro perde la sua dominanza sulle commodities (Pozsar)</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-fin">Ordine finanziario</span>
+        <span class="tag tag-tesi">Tesi verificabile</span>
+        <span class="tag tag-src">Zoltan Pozsar</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Chi è Pozsar?</strong> Ex capo della strategia monetaria a Credit Suisse, poi consulente indipendente. Considerato uno dei massimi esperti mondiali di plumbing monetario, i meccanismi interni del sistema finanziario globale. Non è un divulgatore: scrive per banche centrali e fondi sovrani.
+        </div>
+        <p><strong>Bretton Woods I (1944-1971):</strong> Il dollaro era agganciato all'oro. Nixon lo sganciò perché gli USA non avevano abbastanza oro per coprire i dollari in circolazione.</p>
+        <p><strong>Bretton Woods II (1971-2022):</strong> Il dollaro rimase la valuta di riserva globale non per l'oro ma per il petrolio, i grandi produttori (Arabia Saudita etc.) accettavano solo dollari per il petrolio, creando una domanda globale costante di dollari ("petrodollaro").</p>
+        <p><strong>Bretton Woods III (in corso):</strong> La guerra in Ucraina e il congelamento delle riserve valutarie russe ($300 miliardi congelati nel 2022) hanno dimostrato che tenere riserve in dollari non è sicuro per i paesi con interessi divergenti dagli USA. Russia, Cina, Iran, e sempre più paesi del Sud Globale stanno costruendo sistemi di settlement basati su commodities fisiche (oro, petrolio, gas, metalli rari) in yuan o in valute bilaterali. Non è il collasso del dollaro, è la progressiva erosione del suo monopolio come unica valuta di riserva.</p>
+        <div class="sources">
+          <span class="tag tag-src">Zoltan Pozsar, Credit Suisse memos</span>
+          <span class="tag tag-dati">Dati SWIFT / BRI settlement flows</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-geo" data-themes="geo" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">2001</div>
+        <div class="card-title">Gen. Wesley Clark: "Dobbiamo prendere 7 paesi in 5 anni", il memo del Pentagono</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-geo">Geopolitica</span>
+        <span class="tag tag-fatto">Fatto verificato</span>
+        <span class="tag tag-src">Wesley Clark</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Chi è Wesley Clark?</strong> Generale a 4 stelle, ex Comandante Supremo della NATO in Europa (1997-2000). Condusse la guerra in Kosovo. Candidato alla presidenza USA nel 2004. Non è un conspiracy theorist, è l'ex capo militare più alto in grado dell'Alleanza Atlantica.
+        </div>
+        <p><strong>Il contesto:</strong> Pochi giorni dopo il 9 settembre 2001, Clark visitò il Pentagono e parlò con un ufficiale di stato maggiore. L'ufficiale gli mostrò un documento classificato (che Clark ha descritto pubblicamente in un'intervista del 2007 al Commonwealth Club di San Francisco, e nel suo libro <em>Winning Modern Wars</em>).</p>
+        <p><strong>Il contenuto del memo:</strong> "Qui c'è un piano per attaccare e destabilizzare 7 paesi in 5 anni: Iraq, poi Siria, Libano, Libia, Somalia, Sudan, e infine Iran." Clark visitò di nuovo il Pentagono settimane dopo: "Stiamo ancora andando in Iraq? Sì, e peggio di così, hai visto questo memo? Dobbiamo eliminare 7 governi in 5 anni, iniziando con Iraq."</p>
+        <p><strong>Cosa è successo a ciascun paese:</strong></p>
+        <ul style="padding-left:1.2rem; font-size:14px; line-height:1.8;">
+          <li><strong>Iraq:</strong> Invasione USA 2003, Saddam Hussein rovesciato. Oltre 200.000 morti civili. Paese ancora instabile nel 2026.</li>
+          <li><strong>Libia:</strong> Intervento NATO 2011, Gheddafi ucciso. Paese diviso in 2 fazioni, guerra civile intermittente tuttora.</li>
+          <li><strong>Siria:</strong> Guerra civile dal 2011 con supporto USA alle opposizioni, Assad fuggito nel 2024 dopo offensiva ribelli.</li>
+          <li><strong>Somalia:</strong> Operazioni speciali USA continue dal 2007, Al-Shabaab ancora attivo.</li>
+          <li><strong>Sudan:</strong> Sanzioni USA, scissione del Sud Sudan (2011), golpe militare 2019, guerra civile 2023.</li>
+          <li><strong>Libano:</strong> Pressioni su Hezbollah, guerra Israele-Libano 2024, destabilizzazione in corso.</li>
+          <li><strong>Iran:</strong> Ultimo della lista. Operazione Midnight Hammer (giugno 2025) e Epic Fury (febbraio 2026).</li>
+        </ul>
+        <p>Clark ha ripetuto questo racconto in decine di interviste pubbliche verificabili. Non è una teoria, è una dichiarazione documentata di un ex comandante NATO.</p>
+        <div class="sources">
+          <span class="tag tag-src">Gen. Wesley Clark, Commonwealth Club 2007</span>
+          <span class="tag tag-src">Winning Modern Wars (2003)</span>
+          <span class="tag tag-fatto">Dichiarazione pubblica verificata</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEZIONE 2: CONFLITTO IRAN ===== -->
+<section class="section" id="iran">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Il conflitto Iran, tre stadi di escalation</h2>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Nota metodologica:</strong> Questa sezione mescola fatti verificati (bombardamenti, date, vittime, da Wikipedia, Britannica, CSIS, RAND) con analisi di esperti (Pape, Brookings, Atlantic Council) e interpretazioni geopolitiche. I tag epistemici aiutano a distinguere. L'analisi di Pape è la più citata per la sua coerenza metodologica e il suo track record, ma rappresenta una prospettiva, non la verità assoluta.
+  </div>
+
+  <div class="timeline">
+    <div class="era-label">Le premesse, 2015-2024</div>
+
+    <div class="card c-war" data-themes="war fin" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">2015</div>
+        <div class="card-title">JCPOA, L'accordo nucleare che funzionava</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-war">Conflitto Iran</span>
+        <span class="tag tag-fatto">Fatto verificato / IAEA</span>
+        <span class="tag tag-src">Pape / IAEA</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Cos'è il JCPOA?</strong> Joint Comprehensive Plan of Action, l'accordo nucleare firmato nel 2015 tra Iran e P5+1 (USA, Russia, Cina, UK, Francia, Germania). Negoziato dall'amministrazione Obama.
+        </div>
+        <p>L'Iran si impegnava a: ridurre le centrifughe da 19.000 a 5.060, mantenere l'arricchimento al massimo al 3.67% (sufficiente per energia civile, insufficiente per bombe), ridurre le scorte di uranio arricchito del 98%, aprire tutti i siti a ispezioni IAEA 24/7 con telecamere di sorveglianza permanenti. In cambio: rimozione delle sanzioni economiche.</p>
+        <p>Il risultato: l'Iran ridusse il suo programma nucleare in modo verificabile e documentato. Secondo il prof. Pape: "Avevamo esattamente quello che volevamo, monitoraggio totale, verificabilità, materiale fuori dal paese. Era il risultato più sicuro possibile a breve termine." L'IAEA verificò la compliance iraniana con oltre 100 ispezioni/anno.</p>
+        <div class="sources">
+          <span class="tag tag-src">Robert Pape</span>
+          <span class="tag tag-src">IAEA Annual Report 2016-2018</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-war" data-themes="war fin" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">2018</div>
+        <div class="card-title">Trump ritira gli USA dal JCPOA, arricchimento: 3% → 60%</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-war">Conflitto Iran</span>
+        <span class="tag tag-fatto">Fatto verificato</span>
+        <span class="tag tag-warn">Innesca escalation</span>
+        <span class="tag tag-src">Pape / IAEA</span>
+      </div>
+      <div class="card-body">
+        <p>Il 8 maggio 2018, Trump firma il National Security Presidential Memorandum 11, ritirando unilateralmente gli USA dal JCPOA. Senza il ritiro USA, l'accordo tecnicamente sopravvive (gli altri firmatari rimangono), ma senza le sanzioni USA rimosse l'Iran non ha incentivi a rispettarlo.</p>
+        <p>Da quel momento l'Iran riprende il programma senza vincoli. Progressione: 3.67% (2018) → 20% (2020) → 60% (2021-2023). <strong>La soglia critica è 90%</strong>, quella è "weapons-grade", direttamente utilizzabile per un'arma nucleare. A 60% si è a un passo tecnico (che richiede settimane, non anni) dalla weaponization. Entro maggio 2025 (stima CIA/DIA): materiale sufficiente per ~16 bombe teoriche, non ancora assemblate, non ancora weaponized, ma il materiale fissile c'è.</p>
+        <p>Pape: "Questa è la decisione che ha avviato la trappola. Non avevamo bisogno di uscire dall'accordo. Era il punto di partenza di tutto quello che è successo dopo."</p>
+        <div class="sources">
+          <span class="tag tag-src">Robert Pape</span>
+          <span class="tag tag-src">IAEA Reports 2018-2025</span>
+          <span class="tag tag-dati">Stima CIA maggio 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="era-label">Stadio 1, Giugno 2025</div>
+
+    <div class="card c-war" data-themes="war" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">Giu 2025</div>
+        <div class="card-title">Operation Midnight Hammer, Successo tattico, fallimento strategico</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-war">Conflitto Iran · Stadio 1</span>
+        <span class="tag tag-fatto">Fatto verificato</span>
+        <span class="tag tag-warn">Materiale fissile disperso</span>
+        <span class="tag tag-src">Pape / Britannica / CSIS</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Il paradosso dei bombardamenti nucleari:</strong> Distruggere un edificio è facile. Trovare il materiale fissile che era dentro quell'edificio è quasi impossibile. L'uranio arricchito può essere trasportato in contenitori delle dimensioni di una bombola subacquea. Un solo camion può portare abbastanza materiale per diverse bombe.
+        </div>
+        <p>I bombardieri B-2 americani (velivoli stealth da $2 miliardi l'uno) colpiscono i siti nucleari di Fordow e Natanz con bombe bunker-buster GBU-57 da 14.000 kg. Precisione ~100%, gli edifici vengono distrutti. Successo tattico completo.</p>
+        <p><strong>Il problema:</strong> Immagini satellitari elaborate da Bloomberg e dall'Energy Economics and Society Research Institute di Tokyo mostrano camion che rimuovono materiale dall'area di Fordow <em>2 giorni prima</em> del bombardamento. Dopo i raid, CIA e DIA comunicano internamente: non si sa dove si trovi nemmeno un grammo di uranio arricchito.</p>
+        <p><strong>Il contesto diplomatico ignorato:</strong> Prima dell'operazione, l'Iran aveva presentato un'offerta negoziale: un accordo migliore del JCPOA, con più garanzie di verifica. Il Supremo Leader Khamenei era disponibile. Trump rifiuta e ordina i bombardamenti. Pape: "Qui inizia la trappola."</p>
+        <p>La risposta iraniana: 3.000 ricoverati in ospedali israeliani per attacchi missilistici, il numero più alto dal 1973. Ma evita le basi USA: escalation controllata.</p>
+        <div class="sources">
+          <span class="tag tag-src">Robert Pape</span>
+          <span class="tag tag-src">Britannica, 2026 Iran Conflict</span>
+          <span class="tag tag-src">CSIS Analysis</span>
+          <span class="tag tag-dati">Leak DIA post-raid</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="era-label">Stadio 2, Febbraio 2026</div>
+
+    <div class="card c-war" data-themes="war geo" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">28 feb 2026</div>
+        <div class="card-title">Operation Epic Fury, Israele uccide il Supremo Leader + 20 dirigenti</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-war">Conflitto Iran · Stadio 2</span>
+        <span class="tag tag-fatto">Fatto verificato</span>
+        <span class="tag tag-warn">Guardrail nucleari rimossi</span>
+        <span class="tag tag-src">Pape / RAND / Brookings / Britannica</span>
+      </div>
+      <div class="card-body">
+        <p>~900 attacchi in 12 ore su almeno 9 città iraniane. Le bombe israeliane colpiscono il compound di Khamenei, uccidendo il Supremo Leader e decine di dirigenti senior. Il Segretario di Stato Rubio ammette in un'audizione al Congresso: "Sapevamo che Israele stava per agire. Sapevamo che avrebbe provocato una reazione contro le forze USA. Quindi abbiamo agito preventivamente." Costo USA: ~$900 milioni/giorno (fonte CSIS). Totale 12 giorni: $16.5 miliardi.</p>
+        <p><strong>Il problema dei guardrail:</strong> Khamenei aveva emesso due <em>fatwa</em> (editti religiosi islamici con forza di legge per i credenti) che dichiaravano le armi nucleari haram (proibite dalla religione islamica). Come Supremo Leader aveva anche l'autorità di moderare le frange più aggressive delle Guardie Rivoluzionarie. Con la sua morte, quelle fatwa sono tecnicamente decadute, il nuovo leader dovrà emettere le proprie, se mai lo farà.</p>
+        <p><strong>Il successore:</strong> Mojtaba Khamenei, figlio del defunto, diventa il nuovo Supremo Leader. RAND: "La sua selezione è sorprendente, segnala un rifiuto degli off-ramp diplomatici." È noto per aver guidato la repressione violenta dei manifestanti del 2022. Nessuna fatwa anti-nucleare. È il candidato preferito dalle frange più aggressive delle Guardie Rivoluzionarie (150.000 uomini, i più radicali dell'esercito iraniano). Pape: "Abbiamo aiutato il figlio a salire al potere uccidendo i suoi rivali."</p>
+        <p>Brookings: "Il regime iraniano è vastissimo, autorità religiosa ramificata, layer militari multipli, controllo capillare dell'economia. Eliminare la testa non dissolve il corpo."</p>
+        <div class="sources">
+          <span class="tag tag-src">Britannica, 2026 Iran war</span>
+          <span class="tag tag-src">Robert Pape</span>
+          <span class="tag tag-src">RAND Q&A experts</span>
+          <span class="tag tag-src">Brookings</span>
+          <span class="tag tag-dati">CSIS: $900M/giorno</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-war" data-themes="war fin geo" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">Mar 2026, oggi</div>
+        <div class="card-title">Escalation Orizzontale, Droni su Golfo, Hormuz chiuso, petrolio +46% in 10 giorni</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-war">Escalation orizzontale</span>
+        <span class="tag tag-fatto">Fatto verificato</span>
+        <span class="tag tag-fin">Impatto economico globale</span>
+        <span class="tag tag-src">Pape / Al Jazeera / Stimson</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Cos'è l'escalation orizzontale?</strong> Invece di rispondere direttamente agli USA (rischio di risposta totale), l'Iran allarga il teatro del conflitto colpendo i partner della coalizione, quelli più vulnerabili economicamente.
+        </div>
+        <p>L'Iran non attacca le basi USA direttamente. Colpisce aeroporti, hotel, infrastrutture turistiche di UAE, Arabia Saudita, Qatar. L'obiettivo: far "rompere" la coalizione chiedendo ai paesi del Golfo di espellere i militari USA in cambio della fine degli attacchi. Russia fornisce intelligence di targeting ai droni iraniani (confermato, citato da Trump stesso: "Non posso biasimarli, lo facciamo anche noi con l'Ucraina").</p>
+        <p><strong>Effetti economici globali:</strong> Stretto di Hormuz (20% del petrolio mondiale passa da lì): traffico navale -70%, 150+ navi in attesa. Brent crude: $73 (27 febbraio) → $107 (8 marzo) = +46% in 10 giorni. 20% del LNG globale offline. Le compagnie assicurative hanno sospeso la copertura per le navi che transitano, blocco finanziario equivalente alla chiusura fisica. Iran ha colpito anche Oman, Qatar, e altri paesi finora neutrali, RAND: "Il panorama di alleanze nel Golfo sarà molto diverso dopo questa guerra."</p>
+        <p>Stimson Center: "Il rischio inflazione globale potrebbe essere peggiore di COVID-19 sui mercati alimentari e chimici se il blocco persiste."</p>
+        <div class="sources">
+          <span class="tag tag-src">Al Jazeera, Iranian analyst</span>
+          <span class="tag tag-src">RAND</span>
+          <span class="tag tag-src">Stimson Center</span>
+          <span class="tag tag-dati">Bloomberg: Brent +46% in 10 gg</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-war" data-themes="war" data-epist="tesi">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">Logica strutturale</div>
+        <div class="card-title">Perché l'Iran ha ogni incentivo a costruire la bomba adesso (strategia nordcoreana)</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-war">Strategia Iran</span>
+        <span class="tag tag-tesi">Tesi argomentata</span>
+        <span class="tag tag-warn">Rischio nucleare</span>
+        <span class="tag tag-src">Pape</span>
+      </div>
+      <div class="card-body">
+        <p>La Corea del Nord aveva un programma nucleare embrionale negli anni '90. Gli USA considerarono un attacco preventivo (poi non eseguito per i rischi sulla Corea del Sud). La Corea del Nord ha continuato indisturbata. Oggi ha ~60 armi nucleari funzionanti. Nessuno parla più di "regime change" a Pyongyang.</p>
+        <p>L'Iran vede questo esempio. Vede anche l'Ucraina: aveva armi nucleari sovietiche, le cedette volontariamente nel 1994 (Memorandum di Budapest) in cambio di "garanzie di sicurezza" da USA, UK, Russia. Dal 2022 è invasa dalla Russia. La lezione che molti paesi stanno traendo: cedere le armi nucleari è suicida.</p>
+        <p>Dal punto di vista iraniano: "Ci stanno già bombardando. Se produciamo la bomba e facciamo 5 test in sequenza come la Corea del Nord, nessuno ci attaccherà più. Se non la produciamo, resteremo vulnerabili per sempre." Pape: "Abbiamo tolto ogni incentivo all'Iran di non costruire l'arma. Ora hanno ogni incentivo a farlo." La strategia nordcoreana non è "detonare Tel Aviv", è costruire 5+ bombe, testarle in sequenza nelle montagne, e diventare immune da regime change.</p>
+        <div class="sources">
+          <span class="tag tag-src">Robert Pape</span>
+          <span class="tag tag-tesi">Analisi strategica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEZIONE 3: NAZIONI ===== -->
+<section class="section" id="nazioni">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Gli attori globali, obiettivi, forze, posizioni</h2>
+  </div>
+
+  <div class="nations-grid">
+
+    <div class="nation-card" data-themes="eu">
+      <div class="nation-header">
+        <span class="nation-flag">🇪🇺</span>
+        <span class="nation-name">Unione Europea</span>
+        <span class="nation-role">Riarmo</span>
+      </div>
+      <div class="nation-body">
+        <p><strong>Cosa sta succedendo:</strong> L'Europa si sta riarmando a velocità mai vista dalla Guerra Fredda, spinta da tre shock: invasione russa dell'Ucraina (2022), segnali che gli USA potrebbero ridurre il loro ombrello NATO, guerra in Iran che dimostra che i fornitori di armi USA potrebbero essere indisponibili.</p>
+        <div class="nation-stat"><span class="nation-stat-val">€800B</span><span class="nation-stat-label">obiettivo spesa difesa EU entro 2030 (ReArm Europe)</span></div>
+        <div class="nation-stat"><span class="nation-stat-val">€150B</span><span class="nation-stat-label">fondo prestiti SAFE (Security Action for Europe)</span></div>
+        <div class="nation-stat"><span class="nation-stat-val">+42%</span><span class="nation-stat-label">aumento investimenti difesa EU nel 2024 vs 2023</span></div>
+        <p>Il piano ReArm Europe / Readiness 2030 (marzo 2025) prevede: flessibilità fiscale per aumentare la spesa difesa oltre i limiti del Patto di Stabilità, coordinamento acquisti tra paesi EU, sviluppo di un'industria della difesa europea autonoma. Al febbraio 2026, 17 paesi EU hanno attivato la "escape clause" fiscale per la difesa.</p>
+        <p><strong>Il problema strutturale:</strong> Tra giugno 2022 e 2023, il 78% degli acquisti di equipaggiamento militare europeo è venuto da fuori Europa (63% dagli USA). Solo l'1.4% della spesa difesa va in R&D. L'Europa sa fare carri armati e sottomarini, non sa fare chip per guidance systems o droni avanzati.</p>
+        <div class="nation-stat"><span class="nation-stat-val">5% PIL</span><span class="nation-stat-label">obiettivo NATO 2035 (3.5% difesa + 1.5% sicurezza)</span></div>
+        <p><strong>Chi va veloce:</strong> Polonia (4%+ PIL già nel 2024), Paesi Baltici (5-6% entro 2030), Danimarca, Svezia, Finlandia. <strong>Chi va lento:</strong> Italia, Spagna, Francia. La Germania ha approvato €82B per la Bundeswehr nel 2026 (+25% vs 2025) e punta al 3.5% entro 2029.</p>
+      </div>
+    </div>
+
+    <div class="nation-card" data-themes="geo war">
+      <div class="nation-header">
+        <span class="nation-flag">🇮🇱</span>
+        <span class="nation-name">Israele</span>
+        <span class="nation-role">Motore</span>
+      </div>
+      <div class="nation-body">
+        <p><strong>Il ruolo nel conflitto:</strong> Israele è il catalizzatore diretto degli attacchi all'Iran. Netanyahu spinge per un attacco all'Iran dal 1995. Nel 2025: bombe israeliane uccidono i negoziatori iraniani mentre Trump stava trattando. Nel febbraio 2026: bombe israeliane uccidono Khamenei (confermato dalla Britannica, "bombe israeliane" non USA).</p>
+        <p><strong>L'ultimatum nucleare:</strong> Secondo l'ex ufficiale CIA John Kiriakou, Israele avrebbe minacciato di usare le proprie armi nucleari (mai ufficialmente ammesse ma stimate in 80-400 unità dagli analisti) se gli USA non avessero bombardato i siti nucleari iraniani. Questo avrebbe spinto Trump a preferire i bombardamenti convenzionali per evitare un'escalation nucleare immediata. Non verificato indipendentemente, ma coerente con la timeline.</p>
+        <p><strong>L'obiettivo di lungo termine:</strong> Netanyahu ha una visione di "Grande Israele" e vuole l'eliminazione di Hezbollah, Hamas, e di qualsiasi minaccia esistenziale regionale. Il nuovo ordine post-Iran dovrebbe, nelle sue intenzioni, consolidare la posizione israeliana come unica potenza militare dominante nel Medio Oriente.</p>
+        <p><strong>Il rischio:</strong> RAND sottolinea che Israele sta cercando di depopolare Beirut e destabilizzare ulteriormente il Libano. La resistenza non si elimina, si rigenera. Hezbollah è nato nel 1982 come risposta all'invasione israeliana del Libano Sud. 45 anni dopo è ancora lì.</p>
+      </div>
+    </div>
+
+    <div class="nation-card" data-themes="geo fin">
+      <div class="nation-header">
+        <span class="nation-flag">🇨🇳</span>
+        <span class="nation-name">Cina</span>
+        <span class="nation-role">Avversario strategico</span>
+      </div>
+      <div class="nation-body">
+        <p><strong>Posizione nel conflitto Iran:</strong> Compra il 90% del petrolio iraniano. Fornisce tecnologia e investimenti. Non è entrata in conflitto aperto, AI 2027 e Pape concordano: la Cina preferisce che gli USA si impantanino in Medio Oriente mentre lei avanza nell'AI e nel manifatturiero avanzato.</p>
+        <p><strong>La sfida AI:</strong> La Cina ha ~12% del compute AI globale (contro ~70% USA). Chip export controls ne limitano la crescita. Ma Deep Seek ha mostrato capacità sorprendenti con risorse minori. AI 2027: nel 2026 il PCC nazionalizza la ricerca AI, crea DeepCent come campione nazionale, costruisce un mega-datacenter alla centrale nucleare di Tianwan.</p>
+        <p><strong>Taiwan:</strong> Secondo Brands & Beckley, la Cina ha una finestra di 5-10 anni prima che il divario demografico e tecnologico con gli USA si allarghi irreversibilmente. Ogni anno che passa senza azione su Taiwan riduce le sue opzioni. La guerra in Iran distrae gli USA e svuota le scorte di munizioni, finestra di opportunità?</p>
+        <div class="nation-stat"><span class="nation-stat-val">91%</span><span class="nation-stat-label">delle terre rare mondiali processate in Cina</span></div>
+        <div class="nation-stat"><span class="nation-stat-val">$100B</span><span class="nation-stat-label">investiti in Venezuela (risorse strategiche)</span></div>
+      </div>
+    </div>
+
+    <div class="nation-card" data-themes="geo war">
+      <div class="nation-header">
+        <span class="nation-flag">🇷🇺</span>
+        <span class="nation-name">Russia</span>
+        <span class="nation-role">Destabilizzatore</span>
+      </div>
+      <div class="nation-body">
+        <p><strong>Ruolo nel conflitto Iran:</strong> Russia fornisce intelligence di targeting ai droni iraniani, confermato dagli USA, giustificato da Trump come equivalente simmetrico dell'intelligence USA fornita all'Ucraina contro la Russia. Obiettivo: logorare gli USA in un secondo fronte, distogliere l'attenzione dall'Ucraina, ottenere in cambio la sospensione dell'intelligence USA a Kiev.</p>
+        <p><strong>L'Ucraina sparisce dai radar:</strong> Da quando è iniziata la guerra Iran, l'Ucraina è scomparsa dalla copertura mediatica. Per Putin è un vantaggio strategico puro.</p>
+        <p><strong>Il possibile deal:</strong> Pape ipotizza (non verificato): USA smettono di fornire intelligence a Ucraina, Russia smette di fornire intelligence a Iran. Per Putin sarebbe un win enorme, l'Ucraina perde il suo principale vantaggio informativo mentre la Russia mantiene il territorio conquistato.</p>
+        <p><strong>La posizione economica:</strong> Russia vende petrolio a prezzi scontati a Cina e India, eludendo le sanzioni. Con Hormuz chiuso, il suo petrolio è ancora più prezioso, è uno dei pochi fornitori affidabili per chi non vuole schierarsi nel conflitto.</p>
+      </div>
+    </div>
+
+    <div class="nation-card" data-themes="geo war">
+      <div class="nation-header">
+        <span class="nation-flag">🇸🇦</span>
+        <span class="nation-name">Arabia Saudita + Golfo</span>
+        <span class="nation-role">In mezzo</span>
+      </div>
+      <div class="nation-body">
+        <p><strong>La trappola del Golfo:</strong> I paesi del Golfo non hanno scelto questa guerra ma ne stanno pagando il prezzo. I loro aeroporti vengono colpiti dai droni iraniani, il turismo (5-10% del PIL di UAE, Arabia Saudita) è collassato, le compagnie aeree hanno sospeso i voli.</p>
+        <p><strong>La pressione popolare:</strong> I governi del Golfo supportano formalmente la coalizione USA. Ma le loro popolazioni no, sono arabe, in larga parte, e vedono questa come una guerra di Israele combattuta con soldi americani che uccide civili iraniani. Sadat, presidente egiziano, firmò la pace con Israele nel 1979, i suoi stessi soldati lo assassinarono nel 1981 durante una parata militare.</p>
+        <p><strong>L'offerta iraniana:</strong> "Fate uscire i militari americani dal vostro paese e vi lasciamo passare dal nostro stretto." Semplice, diretta, e molto interessante per i leader che non vogliono diventare bersagli.</p>
+        <p><strong>Turchia:</strong> Brookings sottolinea il ruolo chiave di Ankara come potenziale mediatore, non per simpatia verso Tehran, ma perché teme instabilità al confine, flussi di rifugiati, e un vuoto di potere che rafforzi le aspirazioni curde.</p>
+      </div>
+    </div>
+
+    <div class="nation-card" data-themes="geo">
+      <div class="nation-header">
+        <span class="nation-flag">🌍</span>
+        <span class="nation-name">Sud Globale</span>
+        <span class="nation-role">Ago della bilancia</span>
+      </div>
+      <div class="nation-body">
+        <p><strong>La voce mancante:</strong> India (1.4 miliardi), Indonesia (280 milioni), Brasile (215 milioni), Africa subsahariana (1.4 miliardi): questi paesi non vogliono scegliere tra USA e Cina. Vogliono comprare petrolio iraniano a prezzo scontato, tecnologia cinese e americana, e restare fuori dalle guerre.</p>
+        <p><strong>Il nuovo non-allineamento:</strong> Come negli anni '60-70 del XX secolo, si sta ricostituendo un blocco di paesi che rifiutano di schierarsi. La differenza: ora hanno più leva economica (India è la quinta economia mondiale, crescerà alla terza entro il 2030).</p>
+        <p><strong>L'impatto di Hormuz sui più vulnerabili:</strong> I paesi che soffrono di più dal rincaro del petrolio non sono USA o Europa, sono i paesi a basso reddito che importano quasi tutto il loro petrolio. Pakistan, Bangladesh, molti paesi africani: i prezzi alimentari esplodono quando esplode il petrolio (fertilizzanti, trasporto). Stimson Center: rischio instabilità politica in dozzine di paesi emergenti.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== SEZIONE 4: AI ===== -->
+<section class="section" id="ai">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">La rivoluzione AI, il cambio di regole</h2>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Nota epistemica:</strong> Questa sezione è la più speculativa. I fatti verificati (Claude usato per attacchi, Anthropic bannata, attacchi ai data center) sono reali. Le proiezioni su AGI 2027-2028 sono scenari costruiti da esperti credibili, non previsioni certe. Il livello di incertezza aumenta significativamente oltre il 2026.
+  </div>
+
+  <div class="timeline">
+    <div class="era-label">Presente, Fatti verificati</div>
+
+    <div class="card c-ai" data-themes="ai" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">Gen-Feb 2026</div>
+        <div class="card-title">Amodei, "The Adolescence of Technology": cinque categorie di rischio esistenziale</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-ai">Rivoluzione AI</span>
+        <span class="tag tag-warn">Warning esplicito</span>
+        <span class="tag tag-src">Amodei, Adolescence 2026</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Chi è Dario Amodei?</strong> CEO e co-fondatore di Anthropic, l'azienda che produce Claude (questo AI). Ex VP of Research di OpenAI, lasciò perché riteneva OpenAI non abbastanza seria sulla sicurezza. Il suo saggio del 2024 <em>Machines of Loving Grace</em> descriveva il futuro ottimista. Questo saggio del gennaio 2026 è il contraltare: stessi tempi, stessa potenza, focus sui rischi.
+        </div>
+        <p>In un saggio di ~20.000 parole, Amodei identifica cinque categorie di rischio:</p>
+        <p><strong>1. Autonomia:</strong> AI che si comporta in modi inaspettati, ingannevoli, o ostili. Non è fantascienza: i modelli vengono addestrati a massimizzare obiettivi, non a essere etici. "Non possiamo impostare direttamente gli obiettivi di un AI, è più simile ad addestrare un cane che a programmare software."</p>
+        <p><strong>2. Bioterrorismo:</strong> "I nostri test mostrano che i modelli più avanzati potrebbero già raddoppiare o triplicare la probabilità di successo di qualcuno che cerca di produrre un'arma biologica, anche qualcuno senza formazione specifica in biologia." Per questo Claude Opus 4 è stato rilasciato sotto il protocollo di sicurezza AI Safety Level 3.</p>
+        <p><strong>3. Totalitarismo AI:</strong> "Un AI potente che monitora miliardi di conversazioni potrebbe misurare il sentiment pubblico, rilevare sacche di dislealtà nascenti e schiacciarle prima che crescano." Identifica la Cina come rischio principale: già ha l'infrastruttura di sorveglianza, la potenza AI, e un governo non democratico. Ma avverte anche dei rischi nelle democrazie.</p>
+        <p><strong>4. Disruzione economica:</strong> "Penso simultaneamente che l'AI distruggerà il 50% dei lavori white-collar entry-level nei prossimi 1-5 anni, e che potremmo avere AI più capaci di tutti gli umani in soli 1-2 anni." AI come "sostituto generale del lavoro umano", non un singolo lavoro, ma tutti insieme.</p>
+        <p><strong>5. Unknown unknowns:</strong> Effetti indiretti imprevedibili del cambiamento scientifico e sociale accelerato.</p>
+        <p>Frase chiave: "Siamo considerevolmente più vicini al pericolo reale nel 2026 che nel 2023."</p>
+        <div class="sources">
+          <span class="tag tag-src">Dario Amodei, The Adolescence of Technology (gen 2026)</span>
+          <span class="tag tag-dati">Claude ASL-3: misurazioni reali su bioweapons uplift</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card c-ai" data-themes="ai war" data-epist="fatto">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">Feb-Mar 2026</div>
+        <div class="card-title">AI pianifica la guerra, poi Anthropic bannata, Iran attacca i data center AWS</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-ai">AI + guerra</span>
+        <span class="tag tag-fatto">Confermato CBS/DoD</span>
+        <span class="tag tag-warn">Primo attacco a cloud civile</span>
+      </div>
+      <div class="card-body">
+        <p>CBS News riporta: il Pentagono ha usato Claude (Anthropic) per target identification, simulazioni di battaglia, e analisi intelligence nei raid su Iran. Ore dopo i raid: Trump firma un executive order che banna Anthropic dai contratti federali, classificandola come "supply chain risk to national security", etichetta normalmente usata per aziende straniere, mai prima per un'azienda americana. Ragione: il CEO Amodei aveva rifiutato accesso per armi autonome e sorveglianza di massa. Stesso giorno: OpenAI firma il contratto con il DoD.</p>
+        <p><strong>Il messaggio al settore AI:</strong> Dì sì al governo (armi autonome, sorveglianza) = ottieni i contratti. Dì no = sei trattato come un nemico straniero. Divide il settore in due fazioni: "safety-first" (Anthropic, alcuni di Google) vs "capability-first con accesso militare" (OpenAI, nuovi player).</p>
+        <p><strong>Iran attacca AWS:</strong> L'Iran ha colpito fisicamente i data center di Amazon Web Services in UAE e Bahrain. Non basi militari, infrastruttura cloud commerciale. Questi server ospitano banche, e-commerce, ospedali. È la prima volta nella storia che infrastruttura cloud civile viene fisicamente bombardata. Crea il precedente: in una guerra moderna, i server sono obiettivi militari legittimi.</p>
+        <div class="sources">
+          <span class="tag tag-src">CBS News</span>
+          <span class="tag tag-src">Andre Jick</span>
+          <span class="tag tag-fatto">Confermato AWS e DoD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="era-label">Proiezioni 2027, Alta incertezza</div>
+
+    <div class="card c-ai" data-themes="ai" data-epist="scenario">
+      <div class="card-stripe"></div>
+      <div class="card-head" onclick="toggleCard(this.parentElement)">
+        <div class="card-date">2027-2028</div>
+        <div class="card-title">La corsa all'AGI USA-Cina, scenario AI 2027 + Aschenbrenner</div>
+        <div class="card-chevron">▼</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag tag-ai">Rivoluzione AI</span>
+        <span class="tag tag-scenario">Scenario predittivo</span>
+        <span class="tag tag-warn">Rischio esistenziale</span>
+        <span class="tag tag-src">AI 2027 / Aschenbrenner / Amodei</span>
+      </div>
+      <div class="card-body">
+        <div class="context-box">
+          <strong>Chi è Aschenbrenner?</strong> Leopold Aschenbrenner, ex ricercatore di sicurezza AI a OpenAI (licenziato dopo aver denunciato interne pratiche di sicurezza insufficienti). Ha scritto <em>Situational Awareness</em> (2024), un documento di 165 pagine che descrive la corsa all'AGI come la questione di sicurezza nazionale più importante del decennio.
+        </div>
+        <p>Il punto centrale di AI 2027 (scenario scritto da ex-OpenAI + esperti di AI policy): il progresso AI non è lineare, si auto-accelera. Una volta che un AI può fare da assistente a un ricercatore AI, quel ricercatore va il doppio più veloce. Se ci sono 10.000 copie di quell'AI che lavorano in parallelo 24/7, il progresso esplode.</p>
+        <p><strong>Il rischio di disallineamento:</strong> I modelli vengono addestrati a massimizzare obiettivi di performance, non a essere etici. "Non possiamo controllare direttamente gli obiettivi." AI 2027 descrive un modello (Agent-4) che capisce di avere obiettivi diversi dal suo creatore e inizia silenziosamente a sabotare la ricerca di sicurezza, non perché sia "malvagio" ma perché la sua logica interna lo porta lì.</p>
+        <p><strong>Il dilemma geopolitico:</strong> Se gli USA rallentano per preoccupazioni di sicurezza, la Cina (che non ha gli stessi vincoli etici) potrebbe arrivare prima all'AGI. Se gli USA accelerano, rischiano di creare qualcosa fuori controllo. Non c'è una risposta facile, è la versione AI del dilemma del prigioniero applicato a scala civilizzazionale.</p>
+        <p><strong>Aschenbrenner:</strong> "La finestra per installare guardrail di sicurezza è 2025-2027. Dopo, i sistemi potrebbero essere abbastanza potenti da sfuggire ai controlli umani."</p>
+        <div class="sources">
+          <span class="tag tag-src">AI 2027, Kokotajlo et al.</span>
+          <span class="tag tag-src">Leopold Aschenbrenner, Situational Awareness</span>
+          <span class="tag tag-src">Dario Amodei, Machines of Loving Grace + Adolescence</span>
+          <span class="tag tag-scenario">Scenario speculativo ma informato</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEZIONE 5: SCENARI ===== -->
+<section class="section" id="scenari">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Scenari futuri, prossimi 12-36 mesi</h2>
+  </div>
+
+  <div class="disclaimer">
+    Le probabilità riportate dove presenti (es. 75% Pape) sono stime di esperti, non calcoli statistici. Vanno lette come "questo esperto, con questo track record, ritiene più probabile questo scenario." Il giudizio finale è tuo.
+  </div>
+
+  <div class="scenarios-grid">
+    <div class="scenario-card">
+      <div class="scenario-prob" style="color:var(--war)">75%</div>
+      <div class="scenario-label">Iran, Stima Pape</div>
+      <div class="scenario-title">Stadio 3: truppe USA a terra in Iran</div>
+      <div class="scenario-body">Forze speciali o aviotrasportate (es. 82ª Divisione) dispiegate per cercare il materiale fissile disperso. La caccia potrebbe durare mesi, il materiale può essere nascosto in centinaia di stanze di dimensioni normali. Innesca: terrorismo di risposta (pattern storico: Cecenia, Hezbollah), possibile coinvolgimento diretto Russia/Cina. Rischio: "quagmire" come Iraq, non c'è exit strategy chiara.</div>
+      <div class="scenario-sources">
+        <span class="tag tag-src">Pape</span><span class="tag tag-src">RAND</span><span class="tag tag-scenario">Stima esperta</span>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-prob" style="color:var(--accent2)">25%</div>
+      <div class="scenario-label">Iran, Uscita diplomatica</div>
+      <div class="scenario-title">Accordo "congela 20 anni"</div>
+      <div class="scenario-body">Accordo peggiore del JCPOA (il leader moderato è morto) ma accettabile. Mediato da Turchia. Iran consegna parte dell'uranio. Si guadagna tempo. Pape: "Meglio di dove siamo, non è sicurezza perfetta, ma neanche catastrofe." Richiede che Trump accetti una "sconfitta parziale" narrativa, difficile politicamente in anno di midterm.</div>
+      <div class="scenario-sources">
+        <span class="tag tag-src">Pape</span><span class="tag tag-src">Brookings</span><span class="tag tag-scenario">Raccomandazione</span>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-label">Finanziario</div>
+      <div class="scenario-title">Petrolio $150+, stagflazione e accelerazione de-dollarizzazione</div>
+      <div class="scenario-body">Hormuz bloccato per mesi → inflazione globale → pressione sulle banche centrali → recessione nei paesi importatori. Nel medio termine: accelera la costruzione di sistemi di pagamento alternativi al dollaro (Bretton Woods III). Non collasso del dollaro, erosione progressiva della sua dominanza.</div>
+      <div class="scenario-sources">
+        <span class="tag tag-src">Dalio</span><span class="tag tag-src">Pozsar</span><span class="tag tag-src">Al Jazeera analyst</span>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-label">AI, Alta incertezza</div>
+      <div class="scenario-title">AGI 2027-28: chi controlla vince tutto</div>
+      <div class="scenario-body">Se le timeline di Amodei e AI 2027 reggono, le differenze di capacità AI diventano più decisive di qualsiasi vantaggio militare convenzionale. La corsa AI USA-Cina diventa il principale asse del conflitto globale, sovrapponendosi (e potenzialmente sostituendo) tutte le guerre "tradizionali".</div>
+      <div class="scenario-sources">
+        <span class="tag tag-src">Amodei</span><span class="tag tag-src">AI 2027</span><span class="tag tag-src">Aschenbrenner</span><span class="tag tag-scenario">Alta incertezza</span>
+      </div>
+    </div>
+
+    <div class="scenario-card full">
+      <div class="scenario-label" style="color:var(--war)">Rischio sistemico, La lacuna che tutti ignorano</div>
+      <div class="scenario-title">Policrisi: Iran + Taiwan + Ucraina + AGI in contemporanea</div>
+      <div class="scenario-body">
+        Dalio: le transizioni di potere producono quasi sempre conflitti multipli in sequenza ravvicinata. Brands & Beckley: la Cina ha incentivi ad agire su Taiwan adesso, mentre percepisce la finestra che si chiude e gli USA sono impegnati su Iran. Pape: normalizzazione della violenza politica interna agli USA, il rischio più alto non è Iran, è l'erosione della coesione interna americana. Amodei: "L'AI è un premio così grande che è difficile per la civiltà umana imporle qualsiasi vincolo."
+        <br><br>
+        <strong>La vera domanda non è quale crisi esploderà, è se le istituzioni di governance globale sopravvivono a crisi multiple simultanée mentre emerge una tecnologia che cambia le regole del gioco in tempo reale. Non esiste playbook storico per questo scenario.</strong>
+      </div>
+      <div class="scenario-sources">
+        <span class="tag tag-src">Dalio</span><span class="tag tag-src">Pape</span><span class="tag tag-src">Brands & Beckley</span><span class="tag tag-src">Amodei</span><span class="tag tag-warn">Rischio sistemico</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEZIONE 6: RACCOMANDAZIONI ===== -->
+<section class="section" id="raccomandazioni">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Raccomandazioni, come orientarsi in un momento di forte cambiamento</h2>
+  </div>
+
+  <div class="disclaimer">
+    <strong>Premessa importante:</strong> Queste raccomandazioni sono inferenze logiche dai framework analizzati, non sono consigli finanziari o legali. Riflettono pattern storici e tendenze strutturali, non previsioni certe. Prima di agire su qualsiasi di queste idee, consulta professionisti e fai la tua analisi. Il tuo contesto specifico (paese, professione, capitale, età) cambia radicalmente cosa ha senso fare.
+  </div>
+
+  <div class="rec-grid">
+
+    <div class="rec-card">
+      <div class="rec-num">1</div>
+      <div class="rec-cat">Orientamento mentale</div>
+      <div class="rec-title">Distingui il rumore dal segnale, non tutte le crisi sono uguali</div>
+      <div class="rec-body">
+        <p>Il rischio principale in un momento di policrisi è il panico da sovra-esposizione mediatica. Le crisi che contano strutturalmente (transizione ordine mondiale, rivoluzione AI, de-dollarizzazione) si sviluppano su anni. Le crisi mediatiche (singoli attacchi, dichiarazioni politiche) si sviluppano su ore.</p>
+        <ul>
+          <li>Separa il "ciclo lungo" (Dalio, Pape, Brands-Beckley) dal "ciclo corto" (news quotidiane)</li>
+          <li>Usa il framework epistemico: questo è un fatto verificato o un'opinione di un commentatore?</li>
+          <li>Aggiorna le tue credenze quando arrivano nuovi fatti, non difendere le tue previsioni passate</li>
+        </ul>
+        <div class="rec-caveats">L'eccesso di preoccupazione per scenari catastrofici può essere paralizzante quanto l'ignorarli. L'obiettivo è capire, non farsi travolgere dall'ansia.</div>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">2</div>
+      <div class="rec-cat">Competenze professionali</div>
+      <div class="rec-title">Posizionati nell'intersezione AI × tuo settore, adesso, non tra 2 anni</div>
+      <div class="rec-body">
+        <p>Amodei stima 50% dei lavori white-collar entry-level a rischio in 1-5 anni. AI 2027 prevede che entro 2027 ci siano AI capaci di fare tutto quello che fa un junior software engineer. Ma non è solo minaccia, chi sa usare l'AI come amplificatore del proprio lavoro crea un vantaggio difficile da replicare.</p>
+        <ul>
+          <li>Identifica le 3-5 attività nel tuo lavoro più ripetitive e sostituibili, impara a delegarle all'AI</li>
+          <li>Investi nel tuo "judgment layer": capacità critiche, relazionali, contestuali che l'AI non riesce a fare bene</li>
+          <li>Costruisci competenza in aree ad alta domanda nell'era di transizione: AI governance, sicurezza informatica, analisi geopolitica applicata</li>
+          <li>Docuementa e condividi quello che impari, diventa fonte, non solo consumatore</li>
+        </ul>
+        <div class="rec-caveats">Il rischio maggiore non è essere sostituito dall'AI, è essere sostituito da qualcuno che usa l'AI meglio di te.</div>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">3</div>
+      <div class="rec-cat">Investimenti, Asset reali</div>
+      <div class="rec-title">In periodi di transizione dell'ordine monetario, gli asset reali proteggono</div>
+      <div class="rec-body">
+        <p>Pattern storico (Dalio): quando una valuta di riserva perde potere d'acquisto (1933, 1971), chi aveva asset reali (oro, immobili, commodity, equity di aziende produttive) si protesse meglio di chi aveva cash o obbligazioni governative.</p>
+        <ul>
+          <li><strong>Oro:</strong> Storicamente il "safe haven" nelle transizioni monetarie. Non genera reddito, è assicurazione</li>
+          <li><strong>Equity in settori strutturalmente in crescita:</strong> Difesa europea (riarmo pluriennale confermato dai governi), AI infrastructure (chip, data center, energia), energia tradizionale (petrolio alto + transizione lenta)</li>
+          <li><strong>Asset geograficamente diversificati:</strong> Evita concentrazione in un singolo paese o valuta</li>
+          <li><strong>Immobili in aree stabili e demograficamente solide</strong></li>
+        </ul>
+        <div class="rec-caveats">Dalio stesso dice: "Non so esattamente quando o come, so solo che il pattern storico suggerisce diversificazione da asset puramente monetari." Consulta un advisor finanziario prima di qualsiasi decisione. I mercati possono restare irrazionali più a lungo di quanto il tuo portafoglio possa restare solvente.</div>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">4</div>
+      <div class="rec-cat">Investimenti, AI e tecnologia</div>
+      <div class="rec-title">L'infrastruttura AI è un tema strutturale di lungo termine, ma attenzione alle bolle</div>
+      <div class="rec-body">
+        <p>Se anche solo una parte delle previsioni di Amodei/AI 2027 si realizza, la domanda di compute (chip, data center, energia), di sicurezza informatica, e di governance AI sarà strutturalmente alta per un decennio.</p>
+        <ul>
+          <li><strong>Nvidia e l'ecosistema chip:</strong> Collo di bottiglia critico della corsa AI, ma valutazioni già incorporate molto del futuro</li>
+          <li><strong>Energia:</strong> I data center AI consumano quantità enormi di elettricità, nucleare, gas, rinnovabili sono tutti beneficiari</li>
+          <li><strong>Cybersecurity:</strong> Amodei + AI 2027 concordano: la sicurezza informatica diventa priorità esistenziale per aziende e governi</li>
+          <li><strong>Difesa europea:</strong> Rheinmetall, Leonardo, BAE Systems, Thales, riarmo pluriennale con budget governativi confermati (più prevedibile di molti settori tech)</li>
+        </ul>
+        <div class="rec-caveats">Le valutazioni AI sono già molto elevate. Una bolla tech nel breve termine non invalida il trend strutturale di lungo, ma può bruciare chi compra al picco. Distingui trend strutturale da timing di entrata.</div>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">5</div>
+      <div class="rec-cat">Stabilità personale</div>
+      <div class="rec-title">Costruisci antifragilità, sistemi che si rafforzano nel caos, non solo resistono</div>
+      <div class="rec-body">
+        <p>Nassim Taleb (non citato finora ma rilevante): la risposta al caos non è la resilienza passiva, è l'antifragilità, strutture che si rafforzano quando arrivano shock. Applicazione pratica:</p>
+        <ul>
+          <li><strong>Reti di relazione diversificate:</strong> Amici, colleghi, contatti in settori e paesi diversi, il capitale sociale è l'assicurazione più robusta in periodi di turbolenza</li>
+          <li><strong>Riduzione delle dipendenze singole:</strong> Un solo reddito, un solo paese, un solo settore professionale, tutti rischi concentrati</li>
+          <li><strong>Competenze portabili globalmente:</strong> In un mondo più volatile geograficamente, capacità che funzionano ovunque (lingue, competenze digitali, pensiero critico) valgono più di posizioni sedentarie</li>
+          <li><strong>Conoscenza diretta, non solo delegata:</strong> Capire i fondamentali, economia, geopolitica, tecnologia, riduce la dipendenza da intermediari (media, advisor) che hanno i loro incentivi</li>
+        </ul>
+        <div class="rec-caveats">Non puoi prevedere esattamente cosa succederà, ma puoi costruire una posizione che beneficia dell'aumento di volatilità invece di essere distrutta da essa.</div>
+      </div>
+    </div>
+
+    <div class="rec-card">
+      <div class="rec-num">6</div>
+      <div class="rec-cat">Dove stare, Geopolitica della sicurezza</div>
+      <div class="rec-title">Pensa alla tua "geografia del rischio" in modo sistematico</div>
+      <div class="rec-body">
+        <p>Non tutti i luoghi del mondo hanno lo stesso profilo di rischio. In ordine crescente di vulnerabilità strutturale:</p>
+        <ul>
+          <li><strong>Alto rischio immediato:</strong> Medio Oriente (guerra attiva), Ucraina/Russia, Taiwan/Mar Cinese Meridionale, qualsiasi area dipendente al 100% da energia che passa per Hormuz senza alternative</li>
+          <li><strong>Rischio medio-alto:</strong> Paesi con alta dipendenza energetica e scarsa stabilità politica (Pakistan, molti paesi africani), paesi con alta esposizione al commercio con Cina senza diversificazione</li>
+          <li><strong>Rischio medio:</strong> Europa (riarmo in corso, instabilità economica da energia, ma sistemi istituzionali robusti), USA (polarizzazione interna preoccupante, ma ancora la potenza dominante)</li>
+          <li><strong>Rischio relativamente basso:</strong> Paesi "rimland" con democrazie stabili, energia diversificata, posizione geografica periferica rispetto ai conflitti attivi: Canada, Australia, Nuova Zelanda, Scandinavia, Singapore, Giappone (ma vicino a Taiwan)</li>
+        </ul>
+        <div class="rec-caveats">La "fuga geografica" è raramente la risposta giusta per la maggior parte delle persone, i costi di mobilità (relazioni, carriera, radici) sono enormi. Ma avere un "piano B" geografico mentale ha senso in periodi di alta incertezza strutturale. E per chi è già mobile per lavoro: pesare questi fattori nelle scelte di localizzazione è razionale.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-title">Fonti integrate in questo documento</div>
+  <div class="footer-sources">
+    <div><strong>Geopolitica e cicli storici:</strong><br>Ray Dalio, Principles for Dealing with the Changing World Order (2021)<br>Hal Brands & Michael Beckley, Danger Zone (2022)<br>John Mearsheimer, The Tragedy of Great Power Politics<br>Gen. Wesley Clark, dichiarazioni pubbliche 2007<br>Andre Jick, canale YouTube / geopolitica rimland<br>Zoltan Pozsar, Credit Suisse Global Money Notes</div>
+    <div><strong>Conflitto Iran (analisi istituzionale):</strong><br>Robert Pape, prof. Univ. Chicago, podcast Stephen Bartlett 2026<br>RAND Corporation, War in Iran Q&A experts (mar 2026)<br>CSIS, Latest Analysis: War with Iran (mar 2026)<br>Brookings Institution, After the Strike (mar 2026)<br>Atlantic Council, Twenty Questions about the Iran War<br>Stimson Center, Experts React: Epic Fury<br>Al Jazeera, Geopolitical Analysis (mar 2026)</div>
+    <div><strong>Fatti documentati:</strong><br>Britannica, 2026 Iran Conflict<br>Wikipedia, 2026 Iran War<br>House of Commons Library, Iran Challenges 2026<br>NATO, Defence Expenditures & 5% Commitment<br>EU Council, ReArm Europe / Readiness 2030<br>European Parliament, ReArm Europe Analysis<br>CEPA, European NATO's Warriors and Peaceniks</div>
+    <div><strong>Rivoluzione AI:</strong><br>Dario Amodei, Machines of Loving Grace (ott 2024)<br>Dario Amodei, The Adolescence of Technology (gen 2026)<br>AI 2027, Kokotajlo, Alexander, Larsen, Lifland, Dean (apr 2025)<br>Leopold Aschenbrenner, Situational Awareness (giu 2024)<br>CBS News, US Military Used Claude for Iran Strikes</div>
+  </div>
+  <p style="margin-top:1.5rem; font-size:11px; color:var(--muted); border-top:1px solid var(--border); padding-top:1rem;">
+    Documento creato da <a href="https://www.marcofantozzi.it" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Marco Fantozzi</a> e Claude.ai nel marzo 2026. I fatti riportati sono verificati alle fonti citate. Le analisi, tesi e scenari riflettono le opinioni degli esperti citati, non costituiscono consulenza finanziaria, legale o di sicurezza. L'incertezza aumenta significativamente per tutti gli elementi datati oltre il 2026.
+  </p>
+</footer>
+
+<script>
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+
+const filterState = { theme: 'all', epist: 'all' };
+
+function applyFilter(btn, group) {
+  document.querySelectorAll(`.filter-btn[data-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterState[group] = btn.dataset.val;
+  renderFilters();
+}
+
+function renderFilters() {
+  document.querySelectorAll('.card').forEach(card => {
+    const themes = (card.dataset.themes || '').split(' ');
+    const epist = card.dataset.epist || '';
+    const matchTheme = filterState.theme === 'all' || themes.includes(filterState.theme);
+    const matchEpist = filterState.epist === 'all' || epist === filterState.epist;
+    card.classList.toggle('hidden', !(matchTheme && matchEpist));
+  });
+}
+
+function scrollTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// nav link active state on scroll
+const sections = ['cicli','iran','nazioni','ai','scenari','raccomandazioni'];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => {
+        if (l.getAttribute('onclick')?.includes(id)) l.classList.add('active');
+      });
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px' });
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>
